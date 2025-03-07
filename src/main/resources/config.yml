@@ -3,13 +3,13 @@
 networking:
 
   # IP the API will listen on
-  host: 127.0.0.1
+  host: 0.0.0.0
 
   # Port the API will listen on
   port: 8080
 
   # The URL path, for instance https://example.com/v3/aurora where aurora is the string written below, version numbers are always present
-  url_path: aurora
+  url_path: newnova
 
 behaviour:
 

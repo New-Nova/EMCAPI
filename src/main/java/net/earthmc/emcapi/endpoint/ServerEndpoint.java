@@ -4,8 +4,6 @@ import au.lupine.quarters.api.manager.QuarterManager;
 import com.google.gson.JsonObject;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
-import io.minimum.minecraft.superbvote.SuperbVote;
-import io.minimum.minecraft.superbvote.votes.VoteParty;
 import net.earthmc.emcapi.object.endpoint.GetEndpoint;
 import net.earthmc.emcapi.util.EndpointUtils;
 import au.lupine.quarters.object.entity.Quarter;
@@ -60,16 +58,6 @@ public class ServerEndpoint extends GetEndpoint {
         statsObject.addProperty("numCuboids", quarters.parallelStream().mapToInt(q -> q.getCuboids().size()).sum());
 
         serverObject.add("stats", statsObject);
-
-        VoteParty voteParty = SuperbVote.getPlugin().getVoteParty();
-        int target = voteParty.votesNeeded();
-        int currentVotes = voteParty.getCurrentVotes();
-
-        JsonObject votePartyObject = new JsonObject();
-        votePartyObject.addProperty("target", target);
-        votePartyObject.addProperty("numRemaining", target - currentVotes);
-        serverObject.add("voteParty", votePartyObject);
-
         return serverObject;
     }
 }

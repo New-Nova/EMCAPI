@@ -131,11 +131,5 @@
           <version>1.27.0</version>
           <scope>provided</scope>
       </dependency>
-      <dependency>
-          <groupId>net.earthmc.superbvote</groupId>
-          <artifactId>SuperbVote</artifactId>
-          <version>0.6.0</version>
-          <scope>provided</scope>
-      </dependency>
   </dependencies>
 </project>
