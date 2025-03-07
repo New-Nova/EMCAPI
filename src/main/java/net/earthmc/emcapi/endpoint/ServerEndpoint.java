@@ -52,6 +52,19 @@ public class ServerEndpoint extends GetEndpoint {
         statsObject.addProperty("numTowns", townyAPI.getTowns().size());
         statsObject.addProperty("numTownBlocks", townyAPI.getTownBlocks().size());
         statsObject.addProperty("numNations", townyAPI.getNations().size());
+        
+        // Calculate total outpost spawns across all towns (looks like it works thanks copilot :)
+        int totalOutpostSpawns = townyAPI.getTowns().stream()
+            .filter(town -> town.hasOutpostSpawn())
+            .mapToInt(town -> {
+                try {
+                    return town.getAllOutpostSpawns().size();
+                } catch (Exception e) {
+                    return 0; 
+                }
+            })
+            .sum();
+        statsObject.addProperty("numOutposts", totalOutpostSpawns);
 
         List<Quarter> quarters = quarterManager.getAllQuarters();
         statsObject.addProperty("numQuarters", quarters.size());

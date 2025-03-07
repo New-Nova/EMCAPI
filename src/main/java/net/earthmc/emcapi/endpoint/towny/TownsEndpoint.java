@@ -15,6 +15,7 @@ import net.earthmc.emcapi.object.endpoint.PostEndpoint;
 import net.earthmc.emcapi.util.EndpointUtils;
 import net.earthmc.emcapi.util.JSONUtil;
 
+import java.util.List;
 import java.util.UUID;
 
 public class TownsEndpoint extends PostEndpoint<Town> {
@@ -86,6 +87,31 @@ public class TownsEndpoint extends PostEndpoint<Town> {
         homeBlockArray.add(homeBlock == null ? null : homeBlock.getZ());
         coordinatesObject.add("homeBlock", homeBlockArray);
 
+   // i have no clue how this works but it does :-)
+        JsonObject outpostsObject = new JsonObject();
+        outpostsObject.addProperty("hasOutpost", town.hasOutpostSpawn());
+        outpostsObject.addProperty("outpostAmount", town.getMaxOutpostSpawn());
+        
+        JsonArray outpostSpawnsArray = new JsonArray();
+        if (town.hasOutpostSpawn()) {
+            try {
+                List<org.bukkit.Location> outpostSpawns = town.getAllOutpostSpawns();
+                for (int i = 0; i < outpostSpawns.size(); i++) {
+                    org.bukkit.Location loc = outpostSpawns.get(i);
+                    JsonObject outpostObject = new JsonObject();
+                    outpostObject.addProperty("x", loc.getX());
+                    outpostObject.addProperty("y", loc.getY());
+                    outpostObject.addProperty("z", loc.getZ());
+                    outpostObject.addProperty("world", loc.getWorld().getName());
+                    
+                    outpostSpawnsArray.add(outpostObject);
+                }
+            } catch (Exception e) {
+        }
+        }
+        outpostsObject.add("spawns", outpostSpawnsArray);
+        coordinatesObject.add("outposts", outpostsObject);
+
         JsonArray townBlocksArray = new JsonArray();
         for (TownBlock townBlock : town.getTownBlocks()) {
             JsonArray townBlockArray = new JsonArray();
@@ -114,3 +140,4 @@ public class TownsEndpoint extends PostEndpoint<Town> {
         return townObject;
     }
 }
+        
