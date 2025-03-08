@@ -41,7 +41,9 @@ public class NationsEndpoint extends PostEndpoint<Nation> {
         nationObject.addProperty("dynmapColour", NationMetadataManager.getDynmapColour(nation));
         nationObject.addProperty("dynmapOutline", NationMetadataManager.getDynmapOutline(nation));
         nationObject.addProperty("wiki", NationMetadataManager.getWikiURL(nation));
-
+        if (!nation.getMapColorHexCode().isEmpty()) {
+            nationObject.addProperty("mapColorHexCode", nation.getMapColorHexCode());
+        }
         nationObject.add("king", EndpointUtils.getResidentJsonObject(nation.getKing()));
         nationObject.add("capital", EndpointUtils.getTownJsonObject(nation.getCapital()));
 

@@ -44,6 +44,9 @@ public class TownsEndpoint extends PostEndpoint<Town> {
         townObject.addProperty("board", town.getBoard().isEmpty() ? null : town.getBoard());
         townObject.addProperty("founder", town.getFounder());
         townObject.addProperty("wiki", TownMetadataManager.getWikiURL(town));
+        if (!town.getMapColorHexCode().isEmpty()) {
+            townObject.addProperty("mapColorHexCode", town.getMapColorHexCode());
+        }
 
         townObject.add("mayor", EndpointUtils.getResidentJsonObject(town.getMayor()));
         townObject.add("nation", EndpointUtils.getNationJsonObject(town.getNationOrNull()));
